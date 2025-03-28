@@ -8,8 +8,8 @@ Chart for deploying web applications.
 
 ## Add the chart repository
 
-run `helm repo add heycoach https://heycoach.github.io/helm-infra/`
+run `helm repo add helm-infra https://ExclcloudHQ.github.io/helm-infra/`
 
 ## Install the chart
 
-run `helm install heycoach-helm heycoach/heycoach-helm`
+run `helm repo update`
