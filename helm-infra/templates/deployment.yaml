@@ -1,8 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "heycoach-helm.fullname" . }}
-  namespace: {{ .Values.namespace }}
+  #name: {{ include "heycoach-helm.fullname" . }
+  name: {{ .Release.Name }}-helm-infra
+  #namespace: {{ .Values.namespace }}
 
   labels:
     app.kubernetes.io/name: {{ include "heycoach-helm.name" . }}
