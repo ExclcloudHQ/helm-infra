@@ -23,25 +23,22 @@ spec:
       labels:
         {{- include "heycoach-helm.selectorLabels" . | nindent 8 }}
     spec:
-  serviceAccountName: {{ include "heycoach-helm.serviceAccountName" . }}
-  securityContext:
-    {{- toYaml .Values.podSecurityContext | nindent 8 }}
-  containers:
-    - name: ngnix-container
+      serviceAccountName: {{ include "heycoach-helm.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.securityContext | nindent 12 }}
-      image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-      imagePullPolicy: {{ .Values.image.pullPolicy }}
-      env:
-        {{- toYaml .Values.env | nindent 12 }}
-      {{- if .Values.overrideContainerStartCommand.enabled }}
-      command: {{ .Values.overrideContainerStartCommand.command }}
-      args:
-        {{- range .Values.overrideContainerStartCommand.args }}
-        - {{ . }}
-        {{- end }}
-      {{- end }}
-
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: nginx-container  # Fixed typo from "ngnix" to "nginx"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+          {{- if .Values.overrideContainerStartCommand.enabled }}
+          command: {{ .Values.overrideContainerStartCommand.command }}
+          args:
+            {{- range .Values.overrideContainerStartCommand.args }}
+            - {{ . }}
             {{- end }}
           {{- end }}
           ports:
@@ -71,8 +68,8 @@ spec:
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
           {{- end }}
           volumeMounts:
-          - mountPath: /config
-            name: config-volume
+            - mountPath: /config
+              name: config-volume
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       initContainers:
@@ -80,34 +77,33 @@ spec:
           image: amazon/aws-cli
           imagePullPolicy: Always
           command:
-          - sh
-          - -c
-          - |
-            set -eo pipefail
-            aws configure set aws_access_key_id $AWS_ACCESS_KEY
-            aws configure set aws_secret_access_key $AWS_SECRET_KEY
-            aws configure set default.region us-east-1
-            mkdir -p /config/
-            # Added 1- in the start of the file name to make sure it is the first file to be read, so that app-secret/app-config can take precedence over common-secrets/common-config.
-            aws secretsmanager get-secret-value --secret-id common-secrets-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/1-common-secrets.json
-            aws secretsmanager get-secret-value --secret-id common-config-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/1-common-config.json
-            if [ -n "$AWS_SECRET_MANAGER_ID" ]; then
-              aws secretsmanager get-secret-value --secret-id $AWS_SECRET_MANAGER_ID-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/app-secret.json
-            else
-              echo "No AWS_SECRET_MANAGER_ID provided, skipping fetching app-secret.json"
-            fi
-            echo $CONFIG > /config/app-config.json
+            - sh
+            - -c
+            - |
+                set -eo pipefail
+                aws configure set aws_access_key_id $AWS_ACCESS_KEY
+                aws configure set aws_secret_access_key $AWS_SECRET_KEY
+                aws configure set default.region us-east-1
+                mkdir -p /config/
+                aws secretsmanager get-secret-value --secret-id common-secrets-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/1-common-secrets.json
+                aws secretsmanager get-secret-value --secret-id common-config-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/1-common-config.json
+                if [ -n "$AWS_SECRET_MANAGER_ID" ]; then
+                  aws secretsmanager get-secret-value --secret-id $AWS_SECRET_MANAGER_ID-$AWS_SECRET_MANAGER_ENV --query SecretString --output text > /config/app-secret.json
+                else
+                  echo "No AWS_SECRET_MANAGER_ID provided, skipping fetching app-secret.json"
+                fi
+                echo $CONFIG > /config/app-config.json
           env:
             {{- toYaml .Values.env | nindent 12 }}
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
-          - mountPath: /config
-            name: config-volume
+            - mountPath: /config
+              name: config-volume
       volumes:
-      - emptyDir: {}
-        name: config-volume
+        - emptyDir: {}
+          name: config-volume
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
