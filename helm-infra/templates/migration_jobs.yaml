@@ -5,7 +5,8 @@ metadata:
   name: migration-{{ include "heycoach-helm.fullname" . }}
   labels:
     {{- include "heycoach-helm.labels" . | nindent 4 }}
-  namespace: {{ .Values.namespace }}
+  #namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   annotations:
     {{- include "heycoach-helm.annotations" . | nindent 4 }}
 spec:
