@@ -1,21 +1,22 @@
 # Default values for heycoach-helm.
-# Declare variables to be passed into your templates.
 
 namespace: "heycoach-ns"
+
 replicaCount: 1
 
 image:
   repository: nginx
   pullPolicy: IfNotPresent
-  tag: "latest"  # Ensure a default tag is set
+  tag: "1.16.0"
 
 imagePullSecrets: []
+
 nameOverride: ""
 fullnameOverride: ""
 
 overrideContainerStartCommand:
   enabled: false
-  containerName: "heycoach-container"  # Ensure this is set
+  containerName: "heycoach-container"
   command: []
   args: []
 
@@ -67,3 +68,5 @@ affinity: {}
 volumes:
   - name: config-volume
     emptyDir: {}
+
+# Removed AWS-related initContainers
