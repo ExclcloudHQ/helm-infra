@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-namespace: heycoach-ns
+namespace: "heycoach-ns"
 replicaCount: 1
 
 image:
