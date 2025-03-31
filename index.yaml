@@ -3,12 +3,22 @@ entries:
   helm-infra:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-03-31T13:45:50.870161487+05:30"
+    created: "2025-03-31T15:21:16.175805517+05:30"
+    description: A Helm chart for Kubernetes
+    digest: 3bf0be367c6f7c25812e74c58a9f5a35b965db1c875fbf1a36b1af94b9413f3f
+    name: helm-infra
+    type: application
+    urls:
+    - https://exclcloudhq.github.io/helm-infra/helm-infra-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-03-31T15:21:16.17459014+05:30"
     description: A Helm chart for Kubernetes
     digest: 19dd26aed1c57a6f69e9afc9e57d38f1a5079673cb98f6f5d6519842a2294b0c
     name: helm-infra
     type: application
     urls:
-    - helm-infra-0.2.9.tgz
+    - https://exclcloudhq.github.io/helm-infra/helm-infra-0.2.9.tgz
     version: 0.2.9
-generated: "2025-03-31T13:45:50.869680132+05:30"
+generated: "2025-03-31T15:21:16.174008697+05:30"
