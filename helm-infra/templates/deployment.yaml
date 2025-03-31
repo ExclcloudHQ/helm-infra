@@ -4,7 +4,6 @@ metadata:
   name: {{ include "heycoach-helm.fullname" . }}
   labels:
     {{- include "heycoach-helm.labels" . | nindent 4 }}
-  namespace: {{ .Values.namespace }}
   annotations:
     {{- include "heycoach-helm.annotations" . | nindent 4 }}
 spec:
