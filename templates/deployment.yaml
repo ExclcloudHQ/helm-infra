@@ -23,27 +23,25 @@ spec:
       labels:
         {{- include "heycoach-helm.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "heycoach-helm.serviceAccountName" . }}
+  serviceAccountName: {{ include "heycoach-helm.serviceAccountName" . }}
+  securityContext:
+    {{- toYaml .Values.podSecurityContext | nindent 8 }}
+  containers:
+    - name: {{ .Values.overrideContainerStartCommand.containerName | default "nginx-container" }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      containers:
-          - name: {{ .Values.overrideContainerStartCommand.containerName | default "nginx-container" }}
+        {{- toYaml .Values.securityContext | nindent 12 }}
+      image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      env:
+        {{- toYaml .Values.env | nindent 12 }}
+      {{- if .Values.overrideContainerStartCommand.enabled }}
+      command: {{ .Values.overrideContainerStartCommand.command }}
+      args:
+        {{- range .Values.overrideContainerStartCommand.args }}
+        - {{ . }}
+        {{- end }}
+      {{- end }}
 
-         #containers:
-         #- name: {{ .Values.overrideContainerStartCommand.containerName | default "nginx-container" }}
-
-        #- name: {{ include "heycoach-helm.containerName" . }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            {{- toYaml .Values.env | nindent 12 }}
-          {{- if .Values.overrideContainerStartCommand.enabled }}
-          command: {{ .Values.overrideContainerStartCommand.command }}
-          args:
-            {{- range .Values.overrideContainerStartCommand.args }}
-            - {{ . }}
             {{- end }}
           {{- end }}
           ports:
