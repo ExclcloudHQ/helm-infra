@@ -1,6 +1,6 @@
 # Default values for heycoach-helm.
 
-#namespace: "heycoach-ns"
+namespace: heycoach-ns
 
 replicaCount: 1
 
