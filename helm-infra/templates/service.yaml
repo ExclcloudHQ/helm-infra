@@ -7,7 +7,7 @@ metadata:
     {{- include "heycoach-helm.labels" . | nindent 4 }}
   annotations:
     {{- include "heycoach-helm.annotations" . | nindent 4 }}
-  #namespace: {{ .Values.namespace }}
+  #namespace: {{ .Release.Namespace }}
    namespace: {{ .Release.Namespace }}
 
 spec:

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "heycoach-helm.fullname" . }
   #name: {{ .Release.Name }}-helm-infra
-  #namespace: {{ .Values.namespace }}
+  #namespace: {{ .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
 
 
