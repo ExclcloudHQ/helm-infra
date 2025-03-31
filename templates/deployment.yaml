@@ -27,7 +27,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-         containers:
+         #containers:
          - name: {{ .Values.containerName | default "nginx-container" }}
 
         #- name: {{ include "heycoach-helm.containerName" . }}
