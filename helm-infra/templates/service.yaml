@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "heycoach-helm.fullname" . }}
+  #name: {{ include "heycoach-helm.fullname" . }}
+  name: {{ .Release.Name }}-helm-infra
   labels:
     {{- include "heycoach-helm.labels" . | nindent 4 }}
   annotations:
     {{- include "heycoach-helm.annotations" . | nindent 4 }}
-  namespace: {{ .Values.namespace }}
+  #namespace: {{ .Values.namespace }}
 spec:
   type: {{ .Values.service.type }}
   ports:
