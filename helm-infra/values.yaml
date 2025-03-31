@@ -17,7 +17,7 @@ fullnameOverride: ""
 
 overrideContainerStartCommand:
   enabled: false
-  containerName: ""
+  containerName: "heycoach-container"
   command: []
   args: []
 
