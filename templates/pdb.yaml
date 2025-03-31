@@ -1,0 +1,16 @@
+---
+# PodDisruptionBudget for heycoach-helm
+{{- if ((.Values.pdb)).enabled | default false }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "heycoach-helm.fullname" . }}
+  labels:
+    {{- include "heycoach-helm.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  minAvailable: {{ .Values.pdb.minAvailable | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "heycoach-helm.selectorLabels" . | nindent 6 }}
+{{- end }}
