@@ -1,14 +1,14 @@
 apiVersion: v1
 entries:
-  heycoach-helm:
+  helm-infra:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-03-28T15:37:12.126445883+05:30"
+    created: "2025-03-31T12:09:31.927623189+05:30"
     description: A Helm chart for Kubernetes
-    digest: 5c4f572a1349316483d6eb3f4447771f47af83223d441125450505d86f54a8e0
-    name: heycoach-helm
+    digest: 11afd14a3bdf191944350bb6b0bd85ef2e03ed19435ce1baad518f8d0ffa03a0
+    name: helm-infra
     type: application
     urls:
-    - https://ExclcloudHQ.github.io/helm-infra/helm-infra-0.2.8.tgz
+    - helm-infra-0.2.8.tgz
     version: 0.2.8
-generated: "2025-03-28T15:37:12.125960781+05:30"
+generated: "2025-03-31T12:09:31.927117524+05:30"
