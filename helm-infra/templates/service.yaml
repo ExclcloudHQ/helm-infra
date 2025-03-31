@@ -6,7 +6,7 @@ metadata:
     {{- include "heycoach-helm.labels" . | nindent 4 }}
   annotations:
     {{- include "heycoach-helm.annotations" . | nindent 4 }}
-  namespace: "heycoach-ns"
+  namespace: {{ .Values.namespace }}
 spec:
   type: {{ .Values.service.type }}
   ports:
