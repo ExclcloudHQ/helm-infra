@@ -1,4 +1,4 @@
-namespace: heycoach-ns
+namespace: default
 replicaCount: 1
 
 image:
